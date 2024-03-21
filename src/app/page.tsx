@@ -23,17 +23,13 @@ export default function Home() {
 const TestingFetch = () => {
   const { Query } = useRequestProcessor();
 
-  const { data, isPending, error } = Query("test", () =>
+  /* const { data, isPending, error } = Query("test", () =>
     fetch("http://localhost:8000/api/products").then((res) => res.json())
-  );
+  ); */
 
-  /*   const { isPending, error, data } = useQuery({
-    queryKey: ['products'],
-    queryFn: () =>
-      fetch('http://localhost:8000/api/products').then((res) =>
-        res.json(),
-      ),
-  }) */
+  const { data, isPending, error } = Query("test", async () =>
+    await axiosClient.get("api/products").then((res) => res.data)
+  );
 
   if (isPending) return <div>Loading...</div>;
   if (error) return <div>An error has occurred: {error.message}</div>;
